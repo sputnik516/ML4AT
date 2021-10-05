@@ -1,4 +1,4 @@
-import datetime  # For datetime objects
+import datetime as dt
 import os
 import sys  # To find out the script name (in argv[0])
 import pandas as pd
@@ -124,11 +124,10 @@ if __name__ == '__main__':
     cerebro.addsizer(bt.sizers.PercentSizer, percents=10)
 
     # Add data
+    df = pd.read_pickle(join(DATA_DIR, 'combined_data_{}_01012020-09042021.pkl'.format(FREQ)))
     for token in TOKENS:
-        df = pd.read_pickle(join(DATA_DIR, '{}_{}_2020-01-01 00:00:00.pkl'.format(token, FREQ)))
-        df.drop(columns=['averageOHLC'], inplace=True)
-        df['OI'] = 0
-        data = bt.feeds.PandasData(dataname=df)
+        cols = df.columns.str.contains(token+"_")
+        data = bt.feeds.PandasData(dataname=df.loc[:, cols])
         cerebro.adddata(data, name=token)
 
     # Run over everything
