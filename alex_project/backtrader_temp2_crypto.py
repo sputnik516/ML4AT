@@ -109,7 +109,7 @@ class TestStrategy(bt.Strategy):
 
 
 if __name__ == '__main__':
-    DATA_DIR = "/home/alex/PycharmProjects/machine-learning-for-trading/data/crypto/Token Data/Bitfinex"
+    DATA_DIR = "/home/alex/PycharmProjects/ML4AT/data/crypto/Token Data/Bitfinex"
     TOKENS = ['BTCUSD','ETHUSD','BALUSD']
     FREQ = '1d'
     CASH = 100000
