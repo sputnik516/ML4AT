@@ -73,7 +73,7 @@ In addition to directly controlling the size of the ensemble, there are various 
 
 The ensemble module of sklearn contains an implementation of gradient boosting trees for regression and classification, both binary and multiclass.
 
-The notebook [boosting_baseline](./01_boosting_baseline.ipynb) demonstrates how to run cross-validation for the [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html).
+The notebook [boosting_baseline](01_boosting_baseline.ipynb) demonstrates how to run cross-validation for the [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html).
 
 The notebook [sklearn_gbm_tuning](02_sklearn_gbm_tuning.ipynb) shows how to [GridSearchCV]() to search for the best set of parameters. This can be very time-consuming to run. 
 
