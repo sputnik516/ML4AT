@@ -1,6 +1,8 @@
-from scipy.stats import anderson, shapiro, normaltest, kurtosistest, skewtest
+import numpy as np
+from scipy.stats import anderson, shapiro, normaltest, kurtosistest, skewtest, skew
+from scipy.stats import norm
 from statsmodels.graphics.gofplots import qqplot
-from matplotlib import pyplot
+from matplotlib import pyplot as plt
 
 
 ALPHA = 0.05
@@ -8,7 +10,38 @@ ALPHA = 0.05
 
 def qqplot_wrapper(data):
     qqplot(data)
-    pyplot.show()
+    plt.show()
+
+
+def histogram_data_vs_norm_wrapper(data, n_bins=False):
+    """
+    Source: https://stackoverflow.com/questions/33174249/matplotlib-overlay-a-normal-distribution-with-stddev-axis-onto-another-plot
+    :param n_bins:
+    :param data:
+    :return:
+    """
+    if not n_bins:
+        # n_bins = int(np.sqrt(len(data)))
+        n_bins = int(len(data)/3)
+    h = sorted(data)
+    hmean = np.mean(h)
+    hstd = np.std(h)
+    h_n = (h - hmean) / hstd
+    pdf = norm.pdf( h_n )
+
+    # plot data
+    f,ax1 = plt.subplots()
+
+    ax1.hist( h_n, n_bins, density=True, stacked=True)
+    ax1.plot( h_n , pdf, lw=3, c='r')
+    ax1.set_xlim( [h_n.min(), h_n.max()] )
+    ax1.set_xlabel( r'$\sigma$' )
+    ax1.set_ylabel( r'Relative Frequency')
+
+    ax2 = ax1.twiny()
+    ax2.grid( False )
+    ax2.set_xlim( ax1.get_xlim() )
+    ax2.set_ylim( ax1.get_ylim() )
 
 
 def shapiro_wrapper(data, alpha=ALPHA):
@@ -59,7 +92,7 @@ def kurtosistest_wrapper(data, alpha=ALPHA):
     return res
 
 
-def skewtest_wrapper(data, alpha=ALPHA):
+def skewtest_wrapper(data, alpha=ALPHA, threshold=0.2):
     res = skewtest(data)[1] > alpha
     if res:
         print('Skewness of the population that the sample was drawn from is the same as that of a corresponding normal '
@@ -67,4 +100,14 @@ def skewtest_wrapper(data, alpha=ALPHA):
     else:
         print('Skewness of the population that the sample was drawn from is NOT the same as that of a corresponding '
               'normal distribution. (reject H0)')
+
+    skew_val = skew(data)
+    print("Skew value: {}; threshold: {}".format(skew_val, threshold))
+    if skew_val > threshold:
+        print("More weight in the left tail of the distribution")
+    elif skew_val < -threshold:
+        print("More weight in the right tail of the distribution")
+    else:
+        print("Distribution is approximately symmetric")
     return res
+
