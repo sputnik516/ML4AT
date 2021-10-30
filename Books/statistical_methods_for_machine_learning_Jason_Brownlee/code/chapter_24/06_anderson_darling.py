@@ -9,7 +9,7 @@ data = 5 * randn(100) + 50
 # normality test
 result = anderson(data)
 print('Statistic: %.3f' % result.statistic)
-p = 0
+# p = 0
 for i in range(len(result.critical_values)):
 	sl, cv = result.significance_level[i], result.critical_values[i]
 	if result.statistic < result.critical_values[i]:
