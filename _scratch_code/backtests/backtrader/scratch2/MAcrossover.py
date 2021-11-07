@@ -1,13 +1,14 @@
 from datetime import datetime
 import backtrader as bt
+import pandas as pd
 
 
 # Create a subclass of Strategy to define the indicators and logic
 class SmaCross(bt.Strategy):
     # list of parameters which are configurable for the strategy
     params = dict(
-        pfast=10,  # period for the fast moving average
-        pslow=30   # period for the slow moving average
+        pfast=50,  # period for the fast moving average
+        pslow=200   # period for the slow moving average
     )
 
     def __init__(self):
@@ -24,13 +25,22 @@ class SmaCross(bt.Strategy):
             self.order_target_size(target=0)  # close long position
 
 
+def getData(datapath):
+    dataframe = pd.read_csv(datapath, parse_dates=True, index_col=0)
+
+    print('--------------------------------------------------')
+    print(dataframe)
+    print('--------------------------------------------------')
+
+    # Pass it to the backtrader datafeed and add it to the cerebro
+    data = bt.feeds.PandasData(dataname=dataframe)
+    return data
+
+
 cerebro = bt.Cerebro()  # create a "Cerebro" engine instance
 
-# Create a data feed
-data = bt.feeds.YahooFinanceData(dataname='MSFT',
-                                 fromdate=datetime(2011, 1, 1),
-                                 todate=datetime(2012, 12, 31))
-
+datapath = '/home/alex/PycharmProjects/ML4AT/data/backtrader/datas/2006-01-02-volume-min-001.txt'
+data = getData(datapath)
 cerebro.adddata(data)  # Add the data feed
 
 cerebro.addstrategy(SmaCross)  # Add the trading strategy
