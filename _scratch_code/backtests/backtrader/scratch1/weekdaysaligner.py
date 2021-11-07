@@ -48,7 +48,7 @@ def runstrat():
     #     DataFeed = btfeeds.YahooFinanceData
     #
     # data0 = DataFeed(dataname=args.data0, fromdate=fromdate, todate=todate)
-    DATA_DIR = "/home/alex/PycharmProjects/ML4AT/data/crypto/Token Data/Bitfinex"
+    DATA_DIR = "/data/crypto/Token Data/Bitfinex"
     TOKENS = ['BTCUSD', 'ETHUSD', 'BALUSD']
     FREQ = '1d'
     data0 = bt.feeds.PandasData(dataname=pd.read_pickle(join(DATA_DIR, '{}_{}_2020-01-01 00:00:00.pkl'.format(TOKENS[0], FREQ))))

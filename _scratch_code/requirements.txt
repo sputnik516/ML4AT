@@ -2,4 +2,3 @@ backtrader
 matplotlib
 pandas
 scipy
-
