@@ -2,4 +2,6 @@ backtrader
 matplotlib
 pandas
 scipy
-
+jupyterlab
+seaborn
+scikit-learn
