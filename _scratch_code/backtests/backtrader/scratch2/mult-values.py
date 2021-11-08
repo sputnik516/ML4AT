@@ -126,15 +126,15 @@ def runstrat(args=None):
 
     # Data feed
     data0 = getDataPandasCSV(args.data0)
-    cerebro.adddata(data0, name='d0')
+    cerebro.adddata(data0, name='d0 - NVDA')
 
     data1 = getDataPandasCSV(args.data1)
     data1.plotinfo.plotmaster = data0
-    cerebro.adddata(data1, name='d1')
+    cerebro.adddata(data1, name='d1 - YHOO')
 
     data2 = getDataPandasCSV(args.data2)
     data2.plotinfo.plotmaster = data0
-    cerebro.adddata(data2, name='d2')
+    cerebro.adddata(data2, name='d2 - ORCL')
 
     # Broker
     cerebro.broker = bt.brokers.BackBroker(**eval('dict(' + args.broker + ')'))
