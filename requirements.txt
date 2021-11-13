@@ -2,4 +2,4 @@ backtrader
 matplotlib
 pandas
 scipy
-
+plotly
